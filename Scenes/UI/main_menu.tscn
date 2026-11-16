@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://dbg44w6kqi5hf"]
+
+[ext_resource type="Texture2D" uid="uid://ddpohmchku3w7" path="res://assets/sprites/Game picture/0cae12477295dfae360de82feabbf7a1.jpg" id="1_5wsvm"]
+[ext_resource type="Script" uid="uid://yncbjy4fs2od" path="res://script/autoload/main_menu.gd" id="1_i2xx2"]
+
+[node name="main_menu" type="Control" unique_id=859034447]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_i2xx2")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=773156963]
+layout_mode = 0
+offset_right = 1151.0
+offset_bottom = 650.0
+texture = ExtResource("1_5wsvm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2097956541]
+layout_mode = 0
+offset_right = 1151.0
+offset_bottom = 647.0
+theme_override_constants/separation = 130
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer" unique_id=1114395128]
+modulate = Color(0.24313726, 0.6901961, 0, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 91
+text = "奶龙奶龙"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HighWaveLabel" type="Label" parent="VBoxContainer" unique_id=112750361]
+modulate = Color(0.90083325, 0.14999998, 1, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "最高波次:0"
+
+[node name="HighGoldLabel" type="Label" parent="VBoxContainer" unique_id=774591893]
+modulate = Color(0.41447237, 0.5509147, 0.09540553, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "最高金币：0"
+
+[node name="StartButton" type="Button" parent="VBoxContainer" unique_id=139895206]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 29
+text = "开始"

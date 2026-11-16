@@ -1,0 +1,132 @@
+[gd_scene format=3 uid="uid://b5gci6t2ioijr"]
+
+[ext_resource type="Texture2D" uid="uid://devt2xbk78rej" path="res://assets/sprites/shadow.png" id="1_itd03"]
+[ext_resource type="Script" uid="uid://cv7bd7ml51hbg" path="res://script/actors/enemy_melee.gd" id="1_tsxnb"]
+[ext_resource type="Texture2D" uid="uid://c7bkuw4o6iabw" path="res://assets/sprites/Game picture/07_blade-removebg-preview.png" id="2_tsxnb"]
+
+[sub_resource type="Animation" id="Animation_tsxnb"]
+resource_name = "Die"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, -100), Vector2(0, 0), Vector2(0, 60)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.5707963267948966]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D2:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5981328, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(2, 1), Vector2(1, 0.7), Vector2(2, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_xj5qb"]
+resource_name = "Move"
+length = 0.8
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.00020067772, 0.19999999, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.08726646259971647, 0.0, -0.08726646259971647, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_qtfix"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D2:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_usrmn"]
+_data = {
+&"Die": SubResource("Animation_tsxnb"),
+&"Move": SubResource("Animation_xj5qb"),
+&"RESET": SubResource("Animation_qtfix")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eekn8"]
+radius = 102.044106
+
+[node name="EnemyMelee" type="CharacterBody2D" unique_id=713884052]
+collision_layer = 2
+script = ExtResource("1_tsxnb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1284003302]
+libraries/ = SubResource("AnimationLibrary_usrmn")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=2121446625]
+modulate = Color(0.046189725, 0.004190255, 0.009964523, 0.21176471)
+position = Vector2(0, 130)
+scale = Vector2(2, 1)
+texture = ExtResource("1_itd03")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=887356029]
+texture = ExtResource("2_tsxnb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1448479252]
+position = Vector2(-1, 23)
+shape = SubResource("CircleShape2D_eekn8")

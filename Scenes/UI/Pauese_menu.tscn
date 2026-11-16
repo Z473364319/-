@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://cq5n4u235ly5f"]
+
+[ext_resource type="Script" uid="uid://chiko2hq12g6u" path="res://script/autoload/pause_menu.gd" id="1_w1q84"]
+[ext_resource type="Texture2D" uid="uid://bvb16tlnuhcih" path="res://assets/sprites/Game picture/02_angry-removebg-preview.png" id="2_vsdtw"]
+
+[node name="pause_menu" type="CanvasLayer" unique_id=1281926797]
+script = ExtResource("1_w1q84")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=96623915]
+offset_right = 1147.0
+offset_bottom = 650.0
+color = Color(0, 1, 0, 1)
+
+[node name="Label" type="Label" parent="ColorRect" unique_id=645514326]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 435.0
+offset_top = 4.0
+offset_right = 1034.0
+offset_bottom = 146.0
+theme_override_font_sizes/font_size = 91
+text = "已暂停"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1073887611]
+offset_left = 26.0
+offset_top = 125.0
+offset_right = 371.0
+offset_bottom = 535.0
+texture = ExtResource("2_vsdtw")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="TextureRect" unique_id=1031493470]
+modulate = Color(0, 0, 0.10980392, 1)
+layout_mode = 0
+offset_left = 405.0
+offset_top = 298.0
+offset_right = 1027.0
+offset_bottom = 413.0
+theme_override_font_sizes/font_size = 64
+text = "按Q检查背包"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Continue_Button" type="Button" parent="." unique_id=220498819]
+offset_left = 467.0
+offset_top = 185.0
+offset_right = 1021.0
+offset_bottom = 271.0
+theme_override_font_sizes/font_size = 52
+text = "继续"
+
+[node name="Return_Button" type="Button" parent="." unique_id=2077382487]
+offset_left = 467.0
+offset_top = 295.0
+offset_right = 1021.0
+offset_bottom = 381.0
+theme_override_font_sizes/font_size = 52
+text = "返回至菜单"

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://c1uak8oui1bf"]
+
+[ext_resource type="Script" uid="uid://cuifrs7lb6f1g" path="res://script/resources/enemy_data.gd" id="1_2l0um"]
+[ext_resource type="Script" uid="uid://dufmvvtf78adf" path="res://script/resources/wave_data.gd" id="2_2l0um"]
+[ext_resource type="Resource" uid="uid://bqhynklpsuy83" path="res://resources/stats/Unit_emeny_ststs/enemy_melee_data.tres" id="2_w1mr1"]
+
+[resource]
+script = ExtResource("2_2l0um")
+duration = 40.0
+enemies = Array[ExtResource("1_2l0um")]([ExtResource("2_w1mr1")])
+weights = Array[int]([1])
+metadata/_custom_type_script = "uid://dufmvvtf78adf"

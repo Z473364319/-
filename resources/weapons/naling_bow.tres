@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://ch0r75syw2qu0"]
+
+[ext_resource type="PackedScene" uid="uid://dk5pxe4e10k01" path="res://Scenes/actors/bullet.tscn" id="1_x0peo"]
+[ext_resource type="Script" uid="uid://c1mn3oixhn5w7" path="res://script/resources/weapon_data.gd" id="3_lw3ra"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5c57y"]
+load_path = "res://.godot/imported/8.png-4842cb98c6886c1594b3eb6cc28246c9.ctex"
+
+[resource]
+script = ExtResource("3_lw3ra")
+weapon_name = "bow"
+weapon_type = 1
+attack_cooldown = 1.0
+icon = SubResource("CompressedTexture2D_5c57y")
+bullet_scene = ExtResource("1_x0peo")
+icon_scale = 0.01
+metadata/_custom_type_script = "uid://c1mn3oixhn5w7"

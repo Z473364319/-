@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://bb4ijixnmahxp"]
+
+[ext_resource type="Script" uid="uid://dplaagdk7s64y" path="res://script/autoload/game_over.gd" id="1_wpaxx"]
+[ext_resource type="Texture2D" uid="uid://uuu58wpid5ot" path="res://assets/sprites/Game picture/0aadb1e7952b90dbe9313ee74f333f66.jpg" id="2_jqelu"]
+
+[node name="Gameover" type="Control" unique_id=92750343]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_wpaxx")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1826771859]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 1154.0
+offset_bottom = 650.0
+texture = ExtResource("2_jqelu")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=831198015]
+layout_mode = 0
+offset_right = 416.0
+offset_bottom = 400.0
+theme_override_constants/separation = 40
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=363041062]
+custom_minimum_size = Vector2(0, 91)
+custom_maximum_size = Vector2(-1, 91)
+layout_mode = 2
+theme_override_font_sizes/font_size = 58
+text = "你死了，重来吧"
+
+[node name="WaveLabel" type="Label" parent="VBoxContainer" unique_id=572685644]
+modulate = Color(0.9508334, 1, 0.41000003, 1)
+custom_minimum_size = Vector2(0, 40)
+custom_maximum_size = Vector2(-1, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "11"
+
+[node name="MenuButton" type="Button" parent="." unique_id=1276965867]
+layout_mode = 0
+offset_left = 798.0
+offset_top = 553.0
+offset_right = 1155.0
+offset_bottom = 648.0
+theme_override_font_sizes/font_size = 34
+text = "返回主界面"

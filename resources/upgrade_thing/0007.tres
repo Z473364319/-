@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://de1ia6mwfo6kp"]
+
+[ext_resource type="Script" uid="uid://c8sgr05cf3klo" path="res://script/resources/stat_effect.gd" id="1_cq172"]
+[ext_resource type="Script" uid="uid://c2d25lggfnkaa" path="res://script/resources/upgrade_data.gd" id="2_a3k5k"]
+[ext_resource type="Texture2D" uid="uid://s60yphrw620x" path="res://assets/sprites/Game picture/6cb3a9fec79c7565e44f5a19008f1bb0.jpg" id="2_euiuw"]
+
+[resource]
+script = ExtResource("2_a3k5k")
+id = "0007"
+upgrade_name = "奶安威斯坦"
+description = "购买后，按下冲刺，消耗生命，减缓时间。"
+icon = ExtResource("2_euiuw")
+price = 10
+metadata/_custom_type_script = "uid://c2d25lggfnkaa"

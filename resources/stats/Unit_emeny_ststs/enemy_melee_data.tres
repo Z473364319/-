@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://bqhynklpsuy83"]
+
+[ext_resource type="Script" uid="uid://cuifrs7lb6f1g" path="res://script/resources/enemy_data.gd" id="1_rto3l"]
+[ext_resource type="PackedScene" uid="uid://dpkcdjkfvpp5o" path="res://Scenes/actors/golden.tscn" id="1_w4u7a"]
+[ext_resource type="PackedScene" uid="uid://b5gci6t2ioijr" path="res://Scenes/actors/enemy/enemy_melee.tscn" id="2_cgt62"]
+
+[resource]
+script = ExtResource("1_rto3l")
+enemy_name = "近战敌人"
+max_health = 15
+attack_damage = 6
+attack_range = 430.0
+scene = ExtResource("2_cgt62")
+loot_scene = ExtResource("1_w4u7a")
+loot_amount = 4
+metadata/_custom_type_script = "uid://cuifrs7lb6f1g"

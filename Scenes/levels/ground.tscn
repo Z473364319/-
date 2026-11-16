@@ -1,0 +1,165 @@
+[gd_scene format=3 uid="uid://dnwjt2kbuynuy"]
+
+[ext_resource type="Script" uid="uid://bt858hhjm2des" path="res://script/autoload/ground.gd" id="1_u8an1"]
+[ext_resource type="Texture2D" uid="uid://8dcakl2r6we0" path="res://assets/sprites/Game picture/1f0cb580ddee78c7cc375c353bf1bbe9.jpg" id="1_wuhxj"]
+[ext_resource type="Script" uid="uid://dufmvvtf78adf" path="res://script/resources/wave_data.gd" id="2_8gvwm"]
+[ext_resource type="PackedScene" uid="uid://dgub3jmd83o07" path="res://Scenes/actors/player.tscn" id="2_ga7wt"]
+[ext_resource type="Resource" uid="uid://c1uak8oui1bf" path="res://resources/waves/wave_01.tres" id="3_8gvwm"]
+[ext_resource type="Resource" uid="uid://d1xb8vdrn1brl" path="res://resources/waves/wave_02.tres" id="4_ka7ij"]
+[ext_resource type="Script" uid="uid://lcapha3dvpym" path="res://script/autoload/ui_controller.gd" id="5_0x6c5"]
+[ext_resource type="Resource" uid="uid://ytreheumythn" path="res://resources/waves/wave_03.tres" id="5_ok0a2"]
+[ext_resource type="Texture2D" uid="uid://yjthtwjoslj" path="res://assets/sprites/Game picture/2b99377c4c69ec748877d59dbb5c7914.jpg" id="6_rp5mx"]
+[ext_resource type="Script" uid="uid://c2d25lggfnkaa" path="res://script/resources/upgrade_data.gd" id="7_l2vx1"]
+[ext_resource type="Resource" uid="uid://de1ia6mwfo6kp" path="res://resources/upgrade_thing/0007.tres" id="8_62w4o"]
+[ext_resource type="Resource" uid="uid://ial5yvx4u648" path="res://resources/upgrade_thing/ combo.tres" id="9_83fd7"]
+[ext_resource type="Resource" uid="uid://iusin4vnm2bp" path="res://resources/upgrade_thing/C.tres" id="10_3sax6"]
+[ext_resource type="PackedScene" uid="uid://bi0w1mh6ps2d8" path="res://Scenes/UI/Inventory_Menu.tscn" id="10_d0ei5"]
+[ext_resource type="PackedScene" uid="uid://cq5n4u235ly5f" path="res://Scenes/UI/Pauese_menu.tscn" id="11_a3q5u"]
+[ext_resource type="Resource" uid="uid://tftbvtv1k5kj" path="res://resources/upgrade_thing/Cola.tres" id="11_y8nt0"]
+[ext_resource type="Resource" uid="uid://drsibedic2vhu" path="res://resources/upgrade_thing/happy.tres" id="12_hi4j5"]
+[ext_resource type="Resource" uid="uid://d3rwch6rqoffi" path="res://resources/upgrade_thing/ice_blacktea.tres" id="13_s71dd"]
+[ext_resource type="Resource" uid="uid://cbtsdtf11yokb" path="res://resources/upgrade_thing/qiaolezi.tres" id="14_wdgot"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ryin7"]
+distance = -2772.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_h12fy"]
+normal = Vector2(0.0003813882, 0.9999999)
+distance = -2097.9858
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xn8br"]
+normal = Vector2(-0.9999997, -0.0007934406)
+distance = -3642.9895
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rp5mx"]
+normal = Vector2(1, 0)
+distance = -3577.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_i74l7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0x6c5"]
+
+[node name="Ground" type="Node2D" unique_id=99093603]
+light_mask = 3
+script = ExtResource("1_u8an1")
+waves = Array[ExtResource("2_8gvwm")]([ExtResource("3_8gvwm"), ExtResource("4_ka7ij"), ExtResource("5_ok0a2")])
+transition_texture = ExtResource("6_rp5mx")
+all_upgrades = Array[ExtResource("7_l2vx1")]([ExtResource("8_62w4o"), ExtResource("9_83fd7"), ExtResource("10_3sax6"), ExtResource("11_y8nt0"), ExtResource("12_hi4j5"), ExtResource("13_s71dd"), ExtResource("14_wdgot")])
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=926283967]
+z_index = -1
+position = Vector2(21.500183, 335.49994)
+scale = Vector2(6.72449, 5.4220495)
+texture = ExtResource("1_wuhxj")
+metadata/_edit_lock_ = true
+
+[node name="player" parent="." unique_id=531880628 instance=ExtResource("2_ga7wt")]
+z_index = 10
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1641750764]
+collision_layer = 255
+collision_mask = 0
+metadata/_edit_lock_ = true
+
+[node name="down" type="CollisionShape2D" parent="StaticBody2D" unique_id=1705345247]
+shape = SubResource("WorldBoundaryShape2D_ryin7")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=1257457727]
+collision_layer = 255
+collision_mask = 0
+metadata/_edit_lock_ = true
+
+[node name="up" type="CollisionShape2D" parent="StaticBody2D2" unique_id=1493955418]
+shape = SubResource("WorldBoundaryShape2D_h12fy")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=1068457713]
+collision_layer = 255
+collision_mask = 0
+metadata/_edit_lock_ = true
+
+[node name="right" type="CollisionShape2D" parent="StaticBody2D3" unique_id=2049317073]
+shape = SubResource("WorldBoundaryShape2D_xn8br")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="." unique_id=1151630424]
+collision_layer = 255
+collision_mask = 0
+metadata/_edit_lock_ = true
+
+[node name="left" type="CollisionShape2D" parent="StaticBody2D4" unique_id=1913755577]
+shape = SubResource("WorldBoundaryShape2D_rp5mx")
+metadata/_edit_lock_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1246324750]
+script = ExtResource("5_0x6c5")
+
+[node name="TimeLabel" type="Label" parent="CanvasLayer" unique_id=1433269905]
+modulate = Color(0.012617188, 0.012617188, 0.012617188, 1)
+anchors_preset = -1
+anchor_top = 0.065000005
+anchor_right = 0.252
+anchor_bottom = 0.194
+offset_left = 2.0
+offset_top = -0.12000275
+offset_right = -10.304016
+offset_bottom = 0.28799438
+theme_override_colors/font_color = Color(0.0033963441, 0.024174627, 0.008049414, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.738473, 0.72480285, 0.10645441, 0.09411765)
+text = "00"
+label_settings = SubResource("LabelSettings_i74l7")
+
+[node name="HealthBar" type="ProgressBar" parent="CanvasLayer" unique_id=128228028]
+anchors_preset = -1
+anchor_top = 0.001
+anchor_right = 0.24000001
+anchor_bottom = 0.062000003
+offset_left = -1.0
+offset_top = -0.648
+offset_right = -0.480011
+offset_bottom = -0.1760025
+
+[node name="HealthText" type="Label" parent="CanvasLayer/HealthBar" unique_id=654712511]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.075
+anchor_right = 1.0150001
+anchor_bottom = 2.8240001
+offset_left = 2.0
+offset_right = -3.9750366
+offset_bottom = -0.0010070801
+pivot_offset = Vector2(0, 16)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "999"
+label_settings = SubResource("LabelSettings_0x6c5")
+horizontal_alignment = 2
+
+[node name="LootLabel" type="Label" parent="CanvasLayer" unique_id=1407142484]
+modulate = Color(0.011764706, 0.011764706, 0.023529412, 1)
+offset_left = 897.0
+offset_top = 3.0
+offset_right = 1155.0
+offset_bottom = 60.0
+text = "44"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Wave" type="Label" parent="CanvasLayer" unique_id=1212263602]
+modulate = Color(0.7411765, 0.1882353, 0.89411765, 1)
+offset_left = 397.0
+offset_top = 1.0
+offset_right = 736.0
+offset_bottom = 78.0
+text = "666"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InventoryMenu" parent="." unique_id=1073233013 instance=ExtResource("10_d0ei5")]
+visible = false
+
+[node name="PauseMenu" parent="." unique_id=1281926797 instance=ExtResource("11_a3q5u")]
+visible = false

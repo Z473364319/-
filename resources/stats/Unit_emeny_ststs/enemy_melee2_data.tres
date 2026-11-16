@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://c6l53nmly1pyw"]
+
+[ext_resource type="PackedScene" uid="uid://dpkcdjkfvpp5o" path="res://Scenes/actors/golden.tscn" id="1_4bqed"]
+[ext_resource type="PackedScene" uid="uid://4frm03q6x1an" path="res://Scenes/actors/enemy/enemy_melee2.tscn" id="2_4bqed"]
+[ext_resource type="Script" uid="uid://cuifrs7lb6f1g" path="res://script/resources/enemy_data.gd" id="3_vuk5c"]
+
+[resource]
+script = ExtResource("3_vuk5c")
+enemy_name = "大奶龙"
+max_health = 20
+move_speed = 40.0
+attack_damage = 15
+attack_range = 430.0
+scene = ExtResource("2_4bqed")
+loot_scene = ExtResource("1_4bqed")
+loot_amount = 4
+metadata/_custom_type_script = "uid://cuifrs7lb6f1g"

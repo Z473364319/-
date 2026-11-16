@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://b658dhgqdbjt8"]
+
+[ext_resource type="Script" uid="uid://dvuxb5xbysbrw" path="res://script/autoload/game_database.gd" id="1_8gdy8"]
+[ext_resource type="Script" uid="uid://cvbrnkr6t4kkr" path="res://script/resources/character_stats.gd" id="2_mr4do"]
+[ext_resource type="Resource" uid="uid://boomw5uar7aso" path="res://resources/stats/Unit_player_stats/player_stats.tres" id="3_jg60n"]
+[ext_resource type="Script" uid="uid://c1mn3oixhn5w7" path="res://script/resources/weapon_data.gd" id="4_8ll2e"]
+[ext_resource type="Resource" uid="uid://ch0r75syw2qu0" path="res://resources/weapons/naling_bow.tres" id="5_htskg"]
+[ext_resource type="Script" uid="uid://cuifrs7lb6f1g" path="res://script/resources/enemy_data.gd" id="6_d875f"]
+[ext_resource type="Script" uid="uid://c2d25lggfnkaa" path="res://script/resources/upgrade_data.gd" id="6_jg60n"]
+[ext_resource type="Resource" uid="uid://bqhynklpsuy83" path="res://resources/stats/Unit_emeny_ststs/enemy_melee_data.tres" id="7_3daah"]
+[ext_resource type="Resource" uid="uid://tftbvtv1k5kj" path="res://resources/upgrade_thing/Cola.tres" id="7_8ll2e"]
+[ext_resource type="Resource" uid="uid://cbtsdtf11yokb" path="res://resources/upgrade_thing/qiaolezi.tres" id="8_jikii"]
+[ext_resource type="Resource" uid="uid://ial5yvx4u648" path="res://resources/upgrade_thing/ combo.tres" id="9_v368y"]
+[ext_resource type="Resource" uid="uid://drsibedic2vhu" path="res://resources/upgrade_thing/happy.tres" id="10_b0dje"]
+[ext_resource type="Resource" uid="uid://de1ia6mwfo6kp" path="res://resources/upgrade_thing/0007.tres" id="11_i15eg"]
+[ext_resource type="Resource" uid="uid://iusin4vnm2bp" path="res://resources/upgrade_thing/C.tres" id="12_nkgtn"]
+
+[node name="GameDatabase" type="Node2D" unique_id=740913285]
+script = ExtResource("1_8gdy8")
+all_character_stats = Array[ExtResource("2_mr4do")]([ExtResource("3_jg60n")])
+all_weapons = Array[ExtResource("4_8ll2e")]([ExtResource("5_htskg")])
+all_upgrades = Array[ExtResource("6_jg60n")]([ExtResource("7_8ll2e"), ExtResource("8_jikii"), ExtResource("9_v368y"), ExtResource("10_b0dje"), ExtResource("11_i15eg"), ExtResource("12_nkgtn")])
+all_enemy_types = Array[ExtResource("6_d875f")]([ExtResource("7_3daah")])

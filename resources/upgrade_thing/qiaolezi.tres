@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://cbtsdtf11yokb"]
+
+[ext_resource type="Script" uid="uid://c2d25lggfnkaa" path="res://script/resources/upgrade_data.gd" id="1_11gs3"]
+[ext_resource type="Texture2D" uid="uid://bh8qk7ck73e00" path="res://assets/sprites/Game picture/OIP-C.webp" id="1_djpms"]
+[ext_resource type="Script" uid="uid://c8sgr05cf3klo" path="res://script/resources/stat_effect.gd" id="1_dot84"]
+
+[sub_resource type="Resource" id="Resource_0a832"]
+script = ExtResource("1_dot84")
+value = -10.0
+metadata/_custom_type_script = "uid://c8sgr05cf3klo"
+
+[sub_resource type="Resource" id="Resource_y37qe"]
+script = ExtResource("1_dot84")
+stat_type = "dash_speed"
+value = 300.0
+metadata/_custom_type_script = "uid://c8sgr05cf3klo"
+
+[resource]
+script = ExtResource("1_11gs3")
+id = "0001"
+upgrade_name = "巧乐兹"
+description = "喝了跑的远（消耗生命）"
+icon = ExtResource("1_djpms")
+price = 5
+effects = Array[ExtResource("1_dot84")]([SubResource("Resource_0a832"), SubResource("Resource_y37qe")])
+metadata/_custom_type_script = "uid://c2d25lggfnkaa"

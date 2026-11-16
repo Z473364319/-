@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://bi0w1mh6ps2d8"]
+
+[ext_resource type="Script" uid="uid://cv1iagfb7ldg5" path="res://script/autoload/inventory.gd" id="1_2akhu"]
+[ext_resource type="Texture2D" uid="uid://ddffme61s8ojd" path="res://assets/sprites/Game picture/2.png" id="1_062rv"]
+
+[node name="Inventory_Menu" type="CanvasLayer" unique_id=1073233013]
+process_mode = 3
+script = ExtResource("1_2akhu")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=653561282]
+modulate = Color(1, 1, 0.6784314, 1)
+offset_right = 1159.0
+offset_bottom = 646.0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=684649250]
+offset_left = 678.0
+offset_top = 1.0
+offset_right = 1157.0
+offset_bottom = 647.0
+texture = ExtResource("1_062rv")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="." unique_id=1612629605]
+modulate = Color(0.80784315, 0.15686275, 0, 1)
+self_modulate = Color(1, 1, 0, 1)
+offset_right = 717.0
+offset_bottom = 161.0
+theme_override_font_sizes/font_size = 80
+text = "背包"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="." unique_id=974440489]
+offset_top = 162.0
+offset_right = 743.0
+offset_bottom = 649.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=1055220575]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.003
+anchor_bottom = 1.0
+offset_right = -0.2290039
+
+[node name="ItemGrid" type="GridContainer" parent="Panel/ScrollContainer" unique_id=981625110]
+layout_mode = 2
+columns = 5
+
+[node name="Return_Button" type="Button" parent="." unique_id=327521943]
+offset_left = 743.0
+offset_top = 573.0
+offset_right = 1159.0
+offset_bottom = 648.0
+theme_override_colors/font_color = Color(0.8745098, 1, 0.8745098, 1)
+theme_override_colors/font_focus_color = Color(0.9490196, 0.9490196, 0.4745098, 1)
+theme_override_colors/font_disabled_color = Color(0.8745098, 0.8745098, 0.8745098, 0)
+theme_override_colors/icon_disabled_color = Color(0.012617188, 0.012617188, 0.0031063685, 0.9372549)
+theme_override_font_sizes/font_size = 46
+text = "返回"

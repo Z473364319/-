@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dpkcdjkfvpp5o"]
+
+[ext_resource type="Texture2D" uid="uid://chm4srsn6xd8y" path="res://assets/sprites/Gold/gold_1.png" id="1_4pfk0"]
+[ext_resource type="Script" uid="uid://c21as654hvvpp" path="res://script/actors/golden.gd" id="1_61njd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ryin7"]
+radius = 46.06
+
+[node name="golden" type="Area2D" unique_id=1339493706]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_61njd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=968983140]
+shape = SubResource("CircleShape2D_ryin7")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1487304643]
+texture = ExtResource("1_4pfk0")

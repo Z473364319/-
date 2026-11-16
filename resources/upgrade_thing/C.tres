@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://iusin4vnm2bp"]
+
+[ext_resource type="Script" uid="uid://c8sgr05cf3klo" path="res://script/resources/stat_effect.gd" id="1_on8xe"]
+[ext_resource type="Texture2D" uid="uid://iri6k3h46abl" path="res://assets/sprites/Game picture/b1844e60e8581587b9f30dc30dbc5fe7.jpg" id="2_2xsqg"]
+[ext_resource type="Script" uid="uid://c2d25lggfnkaa" path="res://script/resources/upgrade_data.gd" id="2_4625n"]
+
+[sub_resource type="Resource" id="Resource_lbxvb"]
+script = ExtResource("1_on8xe")
+stat_type = "damage_multiplier"
+value = -7.0
+metadata/_custom_type_script = "uid://c8sgr05cf3klo"
+
+[sub_resource type="Resource" id="Resource_4mj08"]
+script = ExtResource("1_on8xe")
+stat_type = "damage_multiplier"
+value = 7.0
+metadata/_custom_type_script = "uid://c8sgr05cf3klo"
+
+[resource]
+script = ExtResource("2_4625n")
+id = "005"
+upgrade_name = "冰箱里的怡泉c"
+description = "点击后才知道是冰的仙品还是常温的大便
+（增加或减少伤害）"
+icon = ExtResource("2_2xsqg")
+price = 10
+random_effect_pool = Array[ExtResource("1_on8xe")]([SubResource("Resource_lbxvb"), SubResource("Resource_4mj08")])
+metadata/_custom_type_script = "uid://c2d25lggfnkaa"

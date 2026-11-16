@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://d3rwch6rqoffi"]
+
+[ext_resource type="Script" uid="uid://c8sgr05cf3klo" path="res://script/resources/stat_effect.gd" id="1_edn4h"]
+[ext_resource type="Texture2D" uid="uid://b1qufp3tw7he8" path="res://assets/sprites/Game picture/4828214d5eeaac045ff7381b18ea2ebc.jpg" id="2_7wrl6"]
+[ext_resource type="Script" uid="uid://c2d25lggfnkaa" path="res://script/resources/upgrade_data.gd" id="2_orylv"]
+
+[sub_resource type="Resource" id="Resource_7wrl6"]
+script = ExtResource("1_edn4h")
+stat_type = "damage_multiplier"
+value = 1.0
+metadata/_custom_type_script = "uid://c8sgr05cf3klo"
+
+[resource]
+script = ExtResource("2_orylv")
+id = "0006"
+upgrade_name = "冰红茶"
+description = "牢牢记住，逝者为大
+{增加1点伤害}"
+icon = ExtResource("2_7wrl6")
+price = 3
+effects = Array[ExtResource("1_edn4h")]([SubResource("Resource_7wrl6")])
+metadata/_custom_type_script = "uid://c2d25lggfnkaa"

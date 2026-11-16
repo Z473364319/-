@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://b7l5y1h6vby6j"]
+
+[ext_resource type="Script" uid="uid://cbigxbnmpakiw" path="res://script/actors/bullet.gd" id="1_45am4"]
+[ext_resource type="Texture2D" uid="uid://dkji1b4um54aj" path="res://assets/sprites/Projectiles/Projectile_enemy.png" id="2_45am4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o8xs6"]
+radius = 18.527008
+
+[node name="Bullet_enemy" type="Area2D" unique_id=150604066]
+collision_layer = 0
+script = ExtResource("1_45am4")
+speed = 700.0
+lifespan = 5.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=124353191]
+self_modulate = Color(1, 1, 0.49803922, 1)
+position = Vector2(-2.000001, -1.0000019)
+scale = Vector2(0.7656251, 0.7005208)
+texture = ExtResource("2_45am4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1514012042]
+position = Vector2(-1.5, 0)
+shape = SubResource("CircleShape2D_o8xs6")

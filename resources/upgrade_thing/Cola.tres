@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://tftbvtv1k5kj"]
+
+[ext_resource type="Script" uid="uid://c2d25lggfnkaa" path="res://script/resources/upgrade_data.gd" id="1_emsj3"]
+[ext_resource type="Script" uid="uid://c8sgr05cf3klo" path="res://script/resources/stat_effect.gd" id="1_euq51"]
+[ext_resource type="Texture2D" uid="uid://cqmkxp50smnr3" path="res://assets/sprites/Game picture/download.webp" id="1_iyfxx"]
+
+[sub_resource type="Resource" id="Resource_aqeg4"]
+script = ExtResource("1_euq51")
+stat_type = "speed"
+value = 20.0
+metadata/_custom_type_script = "uid://c8sgr05cf3klo"
+
+[sub_resource type="Resource" id="Resource_0mn3d"]
+script = ExtResource("1_euq51")
+value = -10.0
+metadata/_custom_type_script = "uid://c8sgr05cf3klo"
+
+[resource]
+script = ExtResource("1_emsj3")
+id = "0002"
+upgrade_name = "雪碧"
+description = "喝了跑的快（消耗生命）"
+icon = ExtResource("1_iyfxx")
+price = 5
+effects = Array[ExtResource("1_euq51")]([SubResource("Resource_aqeg4"), SubResource("Resource_0mn3d")])
+metadata/_custom_type_script = "uid://c2d25lggfnkaa"
