@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://ch0r75syw2qu0" path="res://resources/weapons/naling_bow.tres" id="3_27n6j"]
 [ext_resource type="Texture2D" uid="uid://bvb16tlnuhcih" path="res://assets/sprites/Game picture/02_angry-removebg-preview.png" id="3_p2ge0"]
 [ext_resource type="Texture2D" uid="uid://cl41iqeh2jl48" path="res://assets/sprites/Game picture/7d290d3f5598e51658660c611ed1e4e4.jpg" id="6_lbxvb"]
+[ext_resource type="Texture2D" uid="uid://7fd7be5kjqxc" path="res://assets/sprites/Game picture/b4f7361da5d19f2588485fb3516d568b.jpg" id="7_4mj08"]
 
 [sub_resource type="Animation" id="Animation_bgxoj"]
 resource_name = "Dash"
@@ -186,7 +187,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("visual/Sprite2D:scale")
+tracks/4/path = NodePath("visual/Node2D/Sprite_ZHFteachar:scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -198,10 +199,58 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("visual/Sprite2D:visible")
+tracks/5/path = NodePath("visual/Node2D/Sprite_ZHFteachar:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("visual/Node2D/Sprite_just_because_you_are_so_beautiful:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-3, -3.2500095)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("visual/Node2D/Sprite_just_because_you_are_so_beautiful:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("visual/Node2D/Sprite_just_because_you_are_so_beautiful:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(4.0239043, 2.7860634)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("visual/Node2D/Sprite_just_because_you_are_so_beautiful:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -269,7 +318,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("visual/Sprite2D:scale")
+tracks/0/path = NodePath("visual/Node2D/Sprite_ZHFteachar:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -281,11 +330,64 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("visual/Sprite2D:visible")
+tracks/1/path = NodePath("visual/Node2D/Sprite_ZHFteachar:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.2, 1.55),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_cgicj"]
+resource_name = "just_because_you_are_so_beautiful"
+length = 2.5000000000000004
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("visual/Node2D/Sprite_just_because_you_are_so_beautiful:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.45, 0.95, 1.65, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-3, -3.2500095), Vector2(25, 6.25), Vector2(-70, -3.25), Vector2(-25, 16.345), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("visual/Node2D/Sprite_just_because_you_are_so_beautiful:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.6, 2, 2.25, 2.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.04363323129985824, 0.04363323, 0.4363323129985824, -0.4363323129985824, 6.283185307179586, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("visual/Node2D/Sprite_just_because_you_are_so_beautiful:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 1, 1.6, 1.9, 2.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0.5, 0.5), Vector2(2.5, 2.5), Vector2(2.5, 0.8), Vector2(1, 2.5), Vector2(0.25, 0.25)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("visual/Node2D/Sprite_just_because_you_are_so_beautiful:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.15, 2.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -299,7 +401,8 @@ _data = {
 &"Move": SubResource("Animation_rlncv"),
 &"RESET": SubResource("Animation_gne8s"),
 &"Stand": SubResource("Animation_7quav"),
-&"ZXFteacher": SubResource("Animation_nfqy8")
+&"ZXFteacher": SubResource("Animation_nfqy8"),
+&"just_because_you_are_so_beautiful": SubResource("Animation_cgicj")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_12npk"]
@@ -316,6 +419,12 @@ base_stats = ExtResource("2_p2ge0")
 [node name="visual" type="Node2D" parent="." unique_id=1206618384]
 metadata/_edit_lock_ = true
 
+[node name="Sprite" type="Sprite2D" parent="visual" unique_id=39409048]
+position = Vector2(0, -15)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_p2ge0")
+metadata/_edit_lock_ = true
+
 [node name="shadow" type="Sprite2D" parent="visual" unique_id=1448231476]
 modulate = Color(0, 0, 0, 0.29803923)
 position = Vector2(0, 130)
@@ -323,13 +432,16 @@ scale = Vector2(2.3850002, 1)
 texture = ExtResource("2_avktq")
 metadata/_edit_lock_ = true
 
-[node name="Sprite" type="Sprite2D" parent="visual" unique_id=39409048]
-position = Vector2(0, -15)
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("3_p2ge0")
+[node name="Node2D" type="Node2D" parent="visual" unique_id=439260699]
+
+[node name="Sprite_just_because_you_are_so_beautiful" type="Sprite2D" parent="visual/Node2D" unique_id=2019630473]
+visible = false
+position = Vector2(-3, -3.2500095)
+scale = Vector2(4.0239043, 2.7860634)
+texture = ExtResource("7_4mj08")
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="visual" unique_id=457998705]
+[node name="Sprite_ZHFteachar" type="Sprite2D" parent="visual/Node2D" unique_id=457998705]
 visible = false
 scale = Vector2(1e-05, 1e-05)
 texture = ExtResource("6_lbxvb")
@@ -346,7 +458,7 @@ shape = SubResource("CircleShape2D_12npk")
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1690638162]
-zoom = Vector2(0.2, 0.2)
+zoom = Vector2(0.187, 0.187)
 limit_left = -3572
 limit_top = -2147
 limit_right = 3665

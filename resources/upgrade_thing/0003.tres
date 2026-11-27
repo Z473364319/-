@@ -4,18 +4,22 @@
 [ext_resource type="Texture2D" uid="uid://ddym71bdhqob5" path="res://assets/sprites/Game picture/da14705ed9e7076abb3f4ebe05cd3ee6.jpg" id="1_dvmfk"]
 [ext_resource type="Script" uid="uid://c8sgr05cf3klo" path="res://script/resources/stat_effect.gd" id="1_vot22"]
 
-[sub_resource type="Resource" id="Resource_rp5mx"]
+[sub_resource type="Resource" id="Resource_t6qqn"]
 script = ExtResource("1_vot22")
-stat_type = "combo"
-value = 1.0
+stat_type = "damage_multiplier"
+metadata/_custom_type_script = "uid://c8sgr05cf3klo"
+
+[sub_resource type="Resource" id="Resource_salc7"]
+script = ExtResource("1_vot22")
+value = -10.0
 metadata/_custom_type_script = "uid://c8sgr05cf3klo"
 
 [resource]
 script = ExtResource("1_bafdo")
 id = "0003"
 upgrade_name = "愤怒"
-description = "真的很愤怒"
+description = "减少生命，增加伤害"
 icon = ExtResource("1_dvmfk")
 price = 7
-effects = Array[ExtResource("1_vot22")]([SubResource("Resource_rp5mx")])
+effects = Array[ExtResource("1_vot22")]([SubResource("Resource_t6qqn"), SubResource("Resource_salc7")])
 metadata/_custom_type_script = "uid://c2d25lggfnkaa"

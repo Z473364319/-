@@ -10,10 +10,9 @@ signal wave_ended()
 @export var rest_duration: float = 5.0         
 @export var transition_texture: Texture2D    
 
+# ================= UI 引用 =================
 @onready var pause_menu: CanvasLayer = $PauseMenu
 @onready var inventory_menu: CanvasLayer = $InventoryMenu
-
-@export var all_upgrades: Array[UpgradeData] = []
 
 # ================= 内部状态 =================
 var _current_wave_index: int = -1
@@ -21,11 +20,17 @@ var _current_wave_data: WaveData
 var _wave_time_left: float = 0.0
 var _spawn_timer: Timer
 var _is_wave_active: bool = false
+var _fixed_spawn_queue: Array[EnemyData] = []   # 精确刷怪：本波还没刷出来的敌人（为空数组表示走随机权重）
+var _spawn_speed_scale: float = 1.0             # 运行时刷怪速度倍率（1 = 正常，2 = 快一倍）
 
 # ================= 生命周期 =================
 func _ready() -> void:
-	# 允许主节点在游戏暂停时也能接收按键
-	process_mode = Node.PROCESS_MODE_ALWAYS
+	# ===== 新的一局开始：重置上一局遗留的全局状态 =====
+	Engine.time_scale = 1.0        # 防止“时停中死亡/退出”把慢动作带进新局
+	get_tree().paused = false      # 防止暂停状态残留，导致新局一开局就是停住的
+	InventoryManager.reset()       # 清空背包：道具/加成不跨局继承
+	SaveManager.last_game_wave = 0
+	SaveManager.last_game_gold = 0
 	
 	_spawn_timer = Timer.new()
 	add_child(_spawn_timer)
@@ -38,17 +43,10 @@ func _ready() -> void:
 	await get_tree().process_frame
 	_start_next_wave()
 
-# ================= 统一接管全局按键 =================
+# ================= 统一接管全局按键（核心修复） =================
 func _unhandled_input(event: InputEvent) -> void:
-	# 1. 处理 Q 键（背包）
-	if event.is_action_pressed("INVENTORY"):
-		if inventory_menu.visible:
-			inventory_menu.close_inventory() # 背包自己会处理好暂停恢复逻辑
-		else:
-			inventory_menu.open_inventory()  # 背包自己会记录状态并强制暂停
-			
-		get_viewport().set_input_as_handled()
-		
+	# 1. 背包（Q 键）交给 InventoryMenu 自己处理：
+	#    ground 在游戏暂停时不处理输入，商店里按 Q 就打不开背包了
 	# 2. 处理 Esc 键（暂停）
 	if event.is_action_pressed("PAUSE"):
 		# 如果背包开着，按 Esc 先关背包
@@ -57,25 +55,36 @@ func _unhandled_input(event: InputEvent) -> void:
 		# 切换暂停菜单状态
 		elif pause_menu.visible:
 			pause_menu.hide()
-			get_tree().paused = false # 关暂停菜单必须恢复游戏
+			get_tree().paused = false 
 		elif not get_tree().paused:
 			if pause_menu.has_method("open_pause"):
 				pause_menu.open_pause()
 			else:
 				pause_menu.show()
-			get_tree().paused = true # 开暂停菜单必须暂停游戏
+			get_tree().paused = true 
 			
 		get_viewport().set_input_as_handled()
 
-# 当从暂停菜单点击“打开背包”时触发
 func _on_request_inventory() -> void:
 	inventory_menu.open_inventory()
 
 # ================= 波次倒计时 =================
 func _process(delta: float) -> void:
+	# 【新增】如果游戏暂停了，波次倒计时停止
+	if get_tree().paused:
+		return
+		
 	if _is_wave_active:
 		_wave_time_left -= delta
 		wave_time_updated.emit(_wave_time_left) 
+		
+		# 波次内刷新速度：按进度从 spawn_interval 逐渐过渡到 spawn_interval_end
+		_update_spawn_interval()
+		
+		# 精确刷怪模式：本波配置的敌人全部刷完、场上也清空后，不用再干等倒计时
+		if _is_fixed_wave() and _fixed_spawn_queue.is_empty() and get_tree().get_nodes_in_group("enemies").is_empty():
+			_end_current_wave()
+			return
 		
 		if _wave_time_left <= 0.0:
 			_end_current_wave()
@@ -84,15 +93,12 @@ func _process(delta: float) -> void:
 func _start_next_wave() -> void:
 	_current_wave_index += 1
 	
-	# 1. 尝试读取预先配置好的波次
 	if _current_wave_index < waves.size():
 		_current_wave_data = waves[_current_wave_index]
 	else:
-		# 2. 预配置波次用完后，动态生成无限波次
 		_current_wave_data = _generate_endless_wave(_current_wave_index + 1)
 		print("=== 进入无限模式，第 ", _current_wave_index + 1, " 波 ===")
 	
-	# 防崩保护
 	if _current_wave_data == null:
 		push_warning("警告：波次数据为空，正在跳过...")
 		_start_next_wave()
@@ -102,6 +108,9 @@ func _start_next_wave() -> void:
 	
 	_wave_time_left = _current_wave_data.duration
 	_is_wave_active = true
+	
+	# 按本波配置生成本波的刷怪队列（固定数量 / 随机权重二选一）
+	_build_spawn_plan(_current_wave_data)
 	
 	var total_waves = -1 if _current_wave_index >= waves.size() else waves.size()
 	wave_started.emit(_current_wave_index + 1, total_waves)
@@ -115,6 +124,9 @@ func _start_next_wave() -> void:
 		var player = players[0]
 		if player.has_method("_check_synergies"):
 			player._check_synergies()
+			
+	# 精英：本波一开始就固定刷出来（其余敌人继续按随机权重刷）
+	_spawn_elites()
 
 func _end_current_wave() -> void:
 	_is_wave_active = false
@@ -122,7 +134,7 @@ func _end_current_wave() -> void:
 	wave_ended.emit()
 	print("=== 第 ", _current_wave_index + 1, " 波结束 ===")
 	
-	# 1. 清空场上敌人（不掉金币）
+	# 1. 清空场上敌人
 	var enemies = get_tree().get_nodes_in_group("enemies")
 	for enemy in enemies:
 		if enemy.has_method("force_clear"):
@@ -160,7 +172,12 @@ func _end_current_wave() -> void:
 		
 	# 6. 继续下一波
 	print("=== 玩家离开商店，准备进入下一波 ===")
-	$player._check_synergies()
+	# 【修复】使用安全的组获取方式，防止 $player 报错
+	if players.size() > 0:
+		var player = players[0]
+		if player.has_method("_check_synergies"):
+			player._check_synergies()
+			
 	_start_next_wave()
 	
 # ================= 过渡动画 =================
@@ -221,13 +238,33 @@ func _generate_endless_wave(wave_num: int) -> WaveData:
 	return endless_wave
 
 # ================= 刷怪逻辑 =================
-func _try_spawn_enemy() -> void:
-	if not _is_wave_active: return
-	
-	if get_tree().get_nodes_in_group("enemies").size() >= _current_wave_data.max_enemies:
+## 当前波是否使用精确刷怪（配置了 fixed_enemies 就走固定数量模式）
+func _is_fixed_wave() -> bool:
+	return _current_wave_data != null and not _current_wave_data.fixed_enemies.is_empty()
+
+## 按波次配置构建本波的待刷队列；没配置精确刷怪时队列为空，继续走随机权重
+func _build_spawn_plan(wave: WaveData) -> void:
+	_fixed_spawn_queue.clear()
+	if wave == null or wave.fixed_enemies.is_empty():
 		return
 		
-	var enemy_data = _get_weighted_enemy(_current_wave_data)
+	for i in range(wave.fixed_enemies.size()):
+		var enemy_data: EnemyData = wave.fixed_enemies[i]
+		if enemy_data == null:
+			continue
+		# 没填数量的默认按 1 个算；填 0 表示这一种不刷
+		var count := 1
+		if i < wave.fixed_counts.size():
+			count = max(0, wave.fixed_counts[i])
+		for _n in range(count):
+			_fixed_spawn_queue.append(enemy_data)
+			
+	# 打乱顺序，避免同一种敌人扎堆出现
+	_fixed_spawn_queue.shuffle()
+	print("=== 第 ", _current_wave_index + 1, " 波精确刷怪：共 ", _fixed_spawn_queue.size(), " 个 ===")
+
+## 把一个敌人刷到玩家周围（精确刷怪 / 随机刷怪 / 精英共用）
+func _spawn_enemy(enemy_data: EnemyData, difficulty: float) -> void:
 	if not enemy_data or not enemy_data.scene:
 		return
 		
@@ -241,8 +278,64 @@ func _try_spawn_enemy() -> void:
 		
 	add_child(enemy)
 	if enemy is BaseEnemy:
-		enemy.setup(enemy_data, _current_wave_data.difficulty_multiplier)
+		enemy.setup(enemy_data, difficulty)
 		enemy.enemy_died.connect(_on_enemy_died)
+
+## 本波精英：波次一开始就固定刷出来，其余敌人仍然按随机权重刷
+func _spawn_elites() -> void:
+	if _current_wave_data == null:
+		return
+		
+	var elite_difficulty = _current_wave_data.difficulty_multiplier * _current_wave_data.elite_scale
+	for i in range(_current_wave_data.elite_enemies.size()):
+		var enemy_data: EnemyData = _current_wave_data.elite_enemies[i]
+		if enemy_data == null:
+			continue
+		var count := 1
+		if i < _current_wave_data.elite_counts.size():
+			count = max(0, _current_wave_data.elite_counts[i])
+		for _n in range(count):
+			_spawn_enemy(enemy_data, elite_difficulty)
+			print("=== 第 ", _current_wave_index + 1, " 波精英出现：", enemy_data.enemy_name, " ===")
+
+func _try_spawn_enemy() -> void:
+	if not _is_wave_active: return
+	
+	if get_tree().get_nodes_in_group("enemies").size() >= _current_wave_data.max_enemies:
+		return
+		
+	var enemy_data: EnemyData = null
+	if _is_fixed_wave():
+		if _fixed_spawn_queue.is_empty():
+			return # 本波配置的敌人已经全部刷完
+		enemy_data = _fixed_spawn_queue.pop_front()
+	else:
+		enemy_data = _get_weighted_enemy(_current_wave_data)
+		
+	_spawn_enemy(enemy_data, _current_wave_data.difficulty_multiplier)
+
+## 按波次进度动态调整刷怪间隔：从 spawn_interval 线性过渡到 spawn_interval_end
+func _update_spawn_interval() -> void:
+	if _current_wave_data == null:
+		return
+	
+	var base_interval := _current_wave_data.spawn_interval
+	var end_interval := _current_wave_data.spawn_interval_end
+	if end_interval > 0.0:
+		var total := _current_wave_data.duration
+		var progress := 1.0 if total <= 0.0 else clampf(1.0 - _wave_time_left / total, 0.0, 1.0)
+		base_interval = lerpf(base_interval, end_interval, progress)
+	
+	# 再叠加运行时的整体倍率（技能 / 事件可以通过 set_spawn_speed_scale 调整）
+	var interval := maxf(base_interval / maxf(_spawn_speed_scale, 0.01), 0.05)
+	
+	# 只有变化比较明显时才写入，避免每帧都去改 Timer
+	if absf(_spawn_timer.wait_time - interval) > 0.01:
+		_spawn_timer.wait_time = interval
+
+## 运行时整体加速/减速刷怪：1 = 正常，2 = 快一倍，0.5 = 慢一半
+func set_spawn_speed_scale(scale: float) -> void:
+	_spawn_speed_scale = clampf(scale, 0.1, 10.0)
 
 func _on_enemy_died(enemy: BaseEnemy) -> void:
 	if enemy.data:
@@ -268,10 +361,3 @@ func _get_weighted_enemy(wave: WaveData) -> EnemyData:
 			return wave.enemies[i]
 			
 	return wave.enemies[0]
-	
-# ==================== 根据 ID 获取道具数据 ====================
-func get_upgrade_data_by_id(id: String) -> UpgradeData:
-	for upg in GameDatabase.all_upgrades:
-		if upg.id == id:
-			return upg
-	return null

@@ -7,8 +7,9 @@
 [resource]
 script = ExtResource("1_rto3l")
 enemy_name = "近战敌人"
-max_health = 15
+max_health = 9
 attack_damage = 6
+attack_cooldown = 3.0
 attack_range = 430.0
 scene = ExtResource("2_cgt62")
 loot_scene = ExtResource("1_w4u7a")

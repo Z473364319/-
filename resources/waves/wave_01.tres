@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("2_2l0um")
-duration = 40.0
+spawn_interval = 2.0
 enemies = Array[ExtResource("1_2l0um")]([ExtResource("2_w1mr1")])
-weights = Array[int]([1])
+spawn_interval_end = 1.0
 metadata/_custom_type_script = "uid://dufmvvtf78adf"

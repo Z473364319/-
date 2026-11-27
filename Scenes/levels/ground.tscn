@@ -9,16 +9,8 @@
 [ext_resource type="Script" uid="uid://lcapha3dvpym" path="res://script/autoload/ui_controller.gd" id="5_0x6c5"]
 [ext_resource type="Resource" uid="uid://ytreheumythn" path="res://resources/waves/wave_03.tres" id="5_ok0a2"]
 [ext_resource type="Texture2D" uid="uid://yjthtwjoslj" path="res://assets/sprites/Game picture/2b99377c4c69ec748877d59dbb5c7914.jpg" id="6_rp5mx"]
-[ext_resource type="Script" uid="uid://c2d25lggfnkaa" path="res://script/resources/upgrade_data.gd" id="7_l2vx1"]
-[ext_resource type="Resource" uid="uid://de1ia6mwfo6kp" path="res://resources/upgrade_thing/0007.tres" id="8_62w4o"]
-[ext_resource type="Resource" uid="uid://ial5yvx4u648" path="res://resources/upgrade_thing/ combo.tres" id="9_83fd7"]
-[ext_resource type="Resource" uid="uid://iusin4vnm2bp" path="res://resources/upgrade_thing/C.tres" id="10_3sax6"]
 [ext_resource type="PackedScene" uid="uid://bi0w1mh6ps2d8" path="res://Scenes/UI/Inventory_Menu.tscn" id="10_d0ei5"]
 [ext_resource type="PackedScene" uid="uid://cq5n4u235ly5f" path="res://Scenes/UI/Pauese_menu.tscn" id="11_a3q5u"]
-[ext_resource type="Resource" uid="uid://tftbvtv1k5kj" path="res://resources/upgrade_thing/Cola.tres" id="11_y8nt0"]
-[ext_resource type="Resource" uid="uid://drsibedic2vhu" path="res://resources/upgrade_thing/happy.tres" id="12_hi4j5"]
-[ext_resource type="Resource" uid="uid://d3rwch6rqoffi" path="res://resources/upgrade_thing/ice_blacktea.tres" id="13_s71dd"]
-[ext_resource type="Resource" uid="uid://cbtsdtf11yokb" path="res://resources/upgrade_thing/qiaolezi.tres" id="14_wdgot"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ryin7"]
 distance = -2772.0
@@ -44,7 +36,6 @@ light_mask = 3
 script = ExtResource("1_u8an1")
 waves = Array[ExtResource("2_8gvwm")]([ExtResource("3_8gvwm"), ExtResource("4_ka7ij"), ExtResource("5_ok0a2")])
 transition_texture = ExtResource("6_rp5mx")
-all_upgrades = Array[ExtResource("7_l2vx1")]([ExtResource("8_62w4o"), ExtResource("9_83fd7"), ExtResource("10_3sax6"), ExtResource("11_y8nt0"), ExtResource("12_hi4j5"), ExtResource("13_s71dd"), ExtResource("14_wdgot")])
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=926283967]
 z_index = -1

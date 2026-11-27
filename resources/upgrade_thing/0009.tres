@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://b5yrou8bras72"]
+
+[ext_resource type="Script" uid="uid://c8sgr05cf3klo" path="res://script/resources/stat_effect.gd" id="1_p0588"]
+[ext_resource type="Texture2D" uid="uid://cx7nelrbfrklb" path="res://assets/sprites/Game picture/1199b407a775c6991dac706adf036230.jpg" id="2_4p46t"]
+[ext_resource type="Script" uid="uid://c2d25lggfnkaa" path="res://script/resources/upgrade_data.gd" id="2_em3rt"]
+
+[sub_resource type="Resource" id="Resource_4p46t"]
+script = ExtResource("1_p0588")
+stat_type = "speed"
+value = 2.5
+metadata/_custom_type_script = "uid://c8sgr05cf3klo"
+
+[sub_resource type="Resource" id="Resource_2tymm"]
+script = ExtResource("1_p0588")
+metadata/_custom_type_script = "uid://c8sgr05cf3klo"
+
+[resource]
+script = ExtResource("2_em3rt")
+id = "0009"
+upgrade_name = "背带裤"
+description = "一个普通的衣服，增加2.5 速度 与 2.5 防御"
+icon = ExtResource("2_4p46t")
+price = 25
+effects = Array[ExtResource("1_p0588")]([SubResource("Resource_4p46t"), SubResource("Resource_2tymm")])
+metadata/_custom_type_script = "uid://c2d25lggfnkaa"

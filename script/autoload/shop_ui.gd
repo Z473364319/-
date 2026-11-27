@@ -34,11 +34,13 @@ func _generate_items() -> void:
 		
 	_update_gold_ui()
 	
-	# 1. 获取总物品池，并过滤掉玩家已经拥有的 0007
+	# 1. 获取物品池：0007 是唯一性能力，背包里已经有时就不再刷出来
 	var available_upgrades = []
 	for upgrade in GameDatabase.all_upgrades:
-		# 如果物品是 0007，且玩家背包里已经有了，就跳过它
-		if upgrade.id == "0007" and current_player.inventory_upgrades.has("0007"):
+		# 用 InventoryManager 的背包数据判断（player.inventory_upgrades 已经不更新了，判断会失效）
+		if upgrade.id == "0007" and InventoryManager.get_item_count("0007") > 0:
+			continue
+		if upgrade.id == "0010" and InventoryManager.get_item_count("0010") > 0:
 			continue
 		available_upgrades.append(upgrade)
 		
@@ -50,14 +52,13 @@ func _generate_items() -> void:
 	var shuffled = available_upgrades.duplicate()
 	shuffled.shuffle()
 	
-	# 3. 固定生成 4 个卡片
-	var total_items_to_show = 4
+	# 3. 每张卡片展示不同的物品；池子不足 4 个时就有几个显示几个
+	var total_items_to_show = mini(4, shuffled.size())
 	for i in range(total_items_to_show):
 		var card = shop_card_scene.instantiate()
 		item_container.add_child(card)
 		
-		# 注意：这里的 shuffled.size() 已经是被过滤后的长度，取余运算依然有效
-		var upgrade = shuffled[i % shuffled.size()]
+		var upgrade = shuffled[i]
 		
 		card.setup(upgrade)
 		card.bought.connect(_on_item_bought)

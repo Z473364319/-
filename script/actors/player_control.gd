@@ -9,13 +9,26 @@ class_name Player
 @export var trail_interval: float = 0.04
 @export var trail_fade_time: float = 0.25
 @export var loot_count: int = 0
-@export var time_slow_duration: float = 6.6  # 时停持续 6.6 秒
-@export var time_slow_cooldown: float = 8.0  # 冷却 8 秒
+@export var time_slow_duration: float = 3.6  # 时停持续 6.6 秒
+@export var time_slow_cooldown: float = 16.0  # 冷却 8 秒
 @export var time_scale_factor: float = 0.2   # 将世界速度减缓到 20%
+
+# ================= 脱困（冲刺钻进敌人身体后避免重叠卡死） =================
+## 脱困时把自己从敌人身体里挤出去的最大速度
+@export var overlap_push_speed: float = 1600.0
+## 脱困后额外留出的空隙（像素）
+@export var overlap_extra_margin: float = 8.0
+## 敌人所在的碰撞层
+const ENEMY_LAYER_BIT: int = 2
+## 墙体层：项目里墙体用的是 255 层（所有层），这里显式保留 1，保证冲刺/脱困时不会穿墙
+const WALL_LAYER_BIT: int = 1
 
 # ================= 初始武器配置 =================
 @export var initial_ranged: WeaponData
 @export var weapon_scale: Vector2 = Vector2(0.008, 0.008)
+
+# 拥有道具 0010（篮球）后，远程攻击的子弹会替换成这个场景
+const BASKETBALL_BULLET: PackedScene = preload("res://Scenes/actors/bull_basketball.tscn")
 
 # ================= 内部状态变量 =================
 var ranged_weapon: WeaponData = null
@@ -32,6 +45,9 @@ var _dash_direction := Vector2.RIGHT
 var _last_direction := Vector2.RIGHT
 var _trail_timer := 0.0
 var _original_collision_mask: int
+var _dash_just_ended: bool = false         # 本帧冲刺刚结束（这一帧不要脱困，避免叠上冲刺速度）
+var _is_escaping_overlap: bool = false     # 本帧是否正在脱困
+var _escape_mask_backup: int = 0           # 脱困前临时改遮罩前的备份
 var bull_number : int = 1
 var _is_synergy_animating: bool = false # 联动动画播放锁
 var has_time_stop_upgrade: bool = false # 是否获得了 0007
@@ -120,6 +136,7 @@ func _physics_process(delta: float) -> void:
 			_trail_timer = trail_interval
 		if _dash_timer <= 0.0:
 			_is_dashing = false
+			_dash_just_ended = true
 			is_invincible = false
 			collision_mask = _original_collision_mask
 	else:
@@ -136,7 +153,25 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity = direction * speed
 
+	# 5. 脱困：冲刺可能把玩家送进敌人的身体内部。两个 CharacterBody2D 嵌在一起时引擎
+	#    不会自动把它们分开，会表现成“重叠且无法分离”，所以这里主动把自己挤出来。
+	var escape_velocity := Vector2.ZERO
+	if not _is_dashing and not _dash_just_ended:
+		escape_velocity = _get_overlap_escape_velocity(delta)
+	if escape_velocity != Vector2.ZERO:
+		velocity += escape_velocity
+		_escape_mask_backup = collision_mask
+		_is_escaping_overlap = true
+		# 只去掉敌人层、保留墙体层：否则从敌人身体内部出发会被判定为“处处碰撞”，反而动不了
+		collision_mask = (collision_mask & ~ENEMY_LAYER_BIT) | WALL_LAYER_BIT
+
 	move_and_slide()
+
+	# 脱困只在这一帧临时改遮罩，移动完立刻还原
+	if _is_escaping_overlap:
+		collision_mask = _escape_mask_backup
+		_is_escaping_overlap = false
+	_dash_just_ended = false
 	
 	if current_health <= 0:
 		die()
@@ -152,7 +187,7 @@ func _physics_process(delta: float) -> void:
 	if weapon_sprite:
 		weapon_sprite.flip_v = get_global_mouse_position().x < global_position.x
 
-	if Input.is_action_just_pressed("ATTACK_remote") and ranged_weapon != null and _ranged_cooldown_timer <= 0.0:
+	if  _ranged_cooldown_timer <= 0.0 and !_is_dead: #Input.is_action_just_pressed("ATTACK_remote") and ranged_weapon != null and
 		_perform_ranged_attack()
 
 # ================= 武器逻辑 =================
@@ -176,12 +211,21 @@ func _perform_ranged_attack() -> void:
 	
 	if not ranged_weapon.bullet_scene or not muzzle: return
 	
+	# 【0010 篮球】拥有道具 0010 时，把普通子弹（bull）换成篮球（bull_basketball）
+	var bullet_scene: PackedScene = ranged_weapon.bullet_scene
+	if InventoryManager.get_item_count("0010") > 0:
+		bullet_scene = BASKETBALL_BULLET
+	
 	var shoot_direction = (get_global_mouse_position() - muzzle.global_position).normalized()
 	var spread_angle = 0.2
 	
 	for i in range(bull_number):
-		var bullet = ranged_weapon.bullet_scene.instantiate() as Bullet
+		var bullet = bullet_scene.instantiate() as Bullet
 		if not bullet: continue
+		
+		# 【0008 / 0009 / 0006】篮球默认弹一次，这三个道具每拥有一个再多弹一次
+		if bullet_scene == BASKETBALL_BULLET:
+			bullet.bounce_count += _get_basketball_bonus_bounces()
 		
 		var angle_offset = randf_range(-spread_angle, spread_angle) 
 		var current_direction = shoot_direction.rotated(angle_offset)
@@ -192,6 +236,14 @@ func _perform_ranged_attack() -> void:
 		bullet.shooter = self
 		get_parent().call_deferred("add_child", bullet) # 延迟添加防物理报错
 
+## 0008 / 0009 / 0006 每拥有一个，篮球多一次反弹
+func _get_basketball_bonus_bounces() -> int:
+	var bonus := 0
+	for id in ["0008", "0009", "0006","0011"]:
+		if InventoryManager.get_item_count(id) > 0:
+			bonus += 1
+	return bonus
+
 # ================= 冲刺与残影 =================
 func _start_dash(input_direction: Vector2) -> void:
 	_is_dashing = true
@@ -201,7 +253,8 @@ func _start_dash(input_direction: Vector2) -> void:
 	_trail_timer = 0.0
 	_dash_direction = input_direction.normalized() if input_direction != Vector2.ZERO else _last_direction
 	_original_collision_mask = collision_mask
-	collision_mask &= ~2
+	# 【修复】只忽略敌人层：墙体在 255 层上，原来的 &= ~2 会把遮罩清零，连墙都能穿过去
+	collision_mask = (collision_mask & ~ENEMY_LAYER_BIT) | WALL_LAYER_BIT
 
 func _spawn_trail() -> void:
 	if not sprite: return
@@ -236,6 +289,12 @@ func die() -> void:
 	if _is_dead: return
 	_is_dead = true
 	print("玩家死亡！Game Over")
+	
+	# 死亡时恢复时间流速，避免“时停中死亡”把 0.2 倍速带到结算界面和下一局
+	if is_time_slowed:
+		is_time_slowed = false
+		time_slow_timer = 0.0
+	Engine.time_scale = 1.0
 	
 	velocity = Vector2.ZERO
 	collision_layer = 0
@@ -287,12 +346,14 @@ func add_loot(amount: int) -> void:
 func apply_upgrade(upgrade: UpgradeData) -> void:
 	print("获得了增益：", upgrade.upgrade_name)
 	
-	# 【你这里必须是这样写的！】用数字累加，而不是赋值为 true！
-	if inventory_upgrades.has(upgrade.id):
-		inventory_upgrades[upgrade.id] += 1
-	else:
-		inventory_upgrades[upgrade.id] = 1
-
+	# 0007 只能拥有一次：重复购买直接忽略，避免重复刷新、重复回血
+	if upgrade.id == "0007" and has_time_stop_upgrade:
+		print("已经拥有 0007，忽略重复购买")
+		return
+	
+	# 【核心修改】使用全局单例记录数据，废弃 player 身上的旧字典
+	InventoryManager.add_item(upgrade.id, 1)
+	
 	# 准备一个最终生效的效果列表（先复制你原本的固定效果）
 	var final_effects = upgrade.effects.duplicate()
 	
@@ -362,24 +423,15 @@ func _show_float_text(text: String, color: Color = Color.YELLOW, font_size: int 
 	tween.chain().tween_callback(label.queue_free)
 
 func _check_synergies() -> void:
-	if inventory_upgrades.has("0001") and inventory_upgrades.has("0002"):
+	# 使用 InventoryManager.get_item_count 判断是否有该物品
+	if InventoryManager.get_item_count("0001") > 0 and InventoryManager.get_item_count("0002") > 0:
 		if not triggered_synergies.has("ZXF_teacher"):
 			triggered_synergies["ZXF_teacher"] = true
 			_activate_ZXF_teacher()
-
-func _activate_ZXF_teacher() -> void:
-	max_health -= 40
-	current_health = max_health
-	speed += 500
-	dash_speed += 600
-	bull_number += 2
-	_is_synergy_animating = true
-	var anim_res = anim.get_animation("ZXFteacher")
-	if anim_res: anim_res.loop_mode = Animation.LOOP_NONE
-	anim.play("ZXFteacher")
-	_show_float_text("张雪峰老师~~，\n我还记得你~~", Color.YELLOW, 410)
-	await anim.animation_finished
-	_is_synergy_animating = false
+	if InventoryManager.get_item_count("0008") > 0 and InventoryManager.get_item_count("0009") > 0 and InventoryManager.get_item_count("0010") > 0 and InventoryManager.get_item_count("0011") > 0:
+		if not triggered_synergies.has("just_because_you_are_so_beautiful"):
+			triggered_synergies["just_because_you_are_so_beautiful"] = true
+			_activate_just_because_you_are_so_beautiful()
 	
 # 开启时间减缓
 func _start_time_slow() -> void:
@@ -397,3 +449,101 @@ func _end_time_slow() -> void:
 	
 	# 恢复玩家颜色
 	if sprite: sprite.modulate = Color(1, 1, 1, 1)
+
+# ================= 脱困：防止“冲刺钻进敌人身体后重叠卡死” =================
+## 如果玩家和敌人重叠了，算出一个“把自己挤出敌人身体”的速度
+func _get_overlap_escape_velocity(delta: float) -> Vector2:
+	if _is_dead:
+		return Vector2.ZERO
+
+	var my_shape := _get_circle_shape(self)
+	if my_shape == null:
+		return Vector2.ZERO
+
+	var my_radius := _get_circle_radius(my_shape)
+	var my_center := my_shape.global_position
+	var deepest_depth := 0.0
+	var deepest_direction := Vector2.ZERO
+
+	for node in get_tree().get_nodes_in_group("enemies"):
+		var enemy := node as BaseEnemy
+		if enemy == null or enemy._is_dead:
+			continue
+
+		var enemy_shape := _get_circle_shape(enemy)
+		if enemy_shape == null:
+			continue
+
+		var offset: Vector2 = my_center - enemy_shape.global_position
+		var dist := offset.length()
+		var min_dist := my_radius + _get_circle_radius(enemy_shape) + overlap_extra_margin
+		if dist >= min_dist:
+			continue # 没有重叠，正常情况
+
+		# 圆心完全重合时随机一个方向，避免除以 0
+		var push_direction := offset / dist if dist > 0.001 else Vector2.RIGHT.rotated(randf() * TAU)
+		var depth := min_dist - dist
+
+		# 只处理陷得最深的那个敌人：多个方向的推力会互相抵消，反而挤不出去
+		if depth > deepest_depth:
+			deepest_depth = depth
+			deepest_direction = push_direction
+
+	if deepest_depth <= 0.0:
+		return Vector2.ZERO
+
+	# 想一帧就把重叠完全挤开需要的速度是 depth / delta，但限制上限，避免看起来像瞬移
+	var escape_speed := minf(deepest_depth / maxf(delta, 0.0001), overlap_push_speed)
+	return deepest_direction * escape_speed
+
+## 取节点上的圆形碰撞体（玩家和敌人用的都是 CircleShape2D）
+func _get_circle_shape(node: Node) -> CollisionShape2D:
+	var shape_node := node.get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if shape_node == null or shape_node.shape == null:
+		return null
+	if not (shape_node.shape is CircleShape2D):
+		return null
+	return shape_node
+
+## 取圆形碰撞体的实际半径（玩家碰撞体被缩放了 11 倍，所以不能写死数值）
+func _get_circle_radius(shape_node: CollisionShape2D) -> float:
+	var circle := shape_node.shape as CircleShape2D
+	if circle == null:
+		return 0.0
+	var shape_scale := maxf(absf(shape_node.global_scale.x), absf(shape_node.global_scale.y))
+	return circle.radius * shape_scale
+
+#==========================联动效果区===========================#
+
+func _activate_ZXF_teacher() -> void:
+	max_health -= 40
+	current_health = max_health
+	speed += 500
+	dash_speed += 600
+	_is_synergy_animating = true
+	is_invincible = true
+	var anim_res = anim.get_animation("ZXFteacher")
+	if anim_res: anim_res.loop_mode = Animation.LOOP_NONE
+	anim.play("ZXFteacher")
+	_show_float_text("张雪峰老师~~，\n我还记得你~~", Color.YELLOW, 410)
+	await anim.animation_finished
+	is_invincible = false
+	_is_synergy_animating = false
+	
+func _activate_just_because_you_are_so_beautiful():
+	max_health = (int)(max_health * 2.5)
+	current_health = max_health
+	speed *= 1.25
+	damage_multiplier *= 2.5
+	bull_number += 2
+	_is_synergy_animating = true
+	is_invincible = true
+	var anim_res = anim.get_animation("just_because_you_are_so_beautiful")
+	if anim_res: anim_res.loop_mode = Animation.LOOP_NONE
+	anim.play("just_because_you_are_so_beautiful")
+	_show_float_text("巅峰产生虚假的拥护，\n黄昏见证真正的信徒", Color.GOLD, 250)
+	await anim.animation_finished
+	is_invincible = false
+	_is_synergy_animating = false
+	
+	#===========================================================#

@@ -9,11 +9,17 @@ script = ExtResource("1_bsy07")
 value = 20.0
 metadata/_custom_type_script = "uid://c8sgr05cf3klo"
 
+[sub_resource type="Resource" id="Resource_e5ga1"]
+script = ExtResource("1_bsy07")
+stat_type = "damage_multiplier"
+value = -5.0
+metadata/_custom_type_script = "uid://c8sgr05cf3klo"
+
 [resource]
 script = ExtResource("1_ak8ek")
 id = "0004"
 upgrade_name = "生命"
-description = "增加生命"
+description = "减少伤害，增加生命"
 icon = ExtResource("1_srcpo")
-effects = Array[ExtResource("1_bsy07")]([SubResource("Resource_dot84")])
+effects = Array[ExtResource("1_bsy07")]([SubResource("Resource_dot84"), SubResource("Resource_e5ga1")])
 metadata/_custom_type_script = "uid://c2d25lggfnkaa"

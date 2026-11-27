@@ -5,7 +5,13 @@
 
 [node name="main_menu" type="Control" unique_id=859034447]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_i2xx2")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=773156963]
@@ -17,8 +23,8 @@ texture = ExtResource("1_5wsvm")
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2097956541]
 layout_mode = 0
 offset_right = 1151.0
-offset_bottom = 647.0
-theme_override_constants/separation = 130
+offset_bottom = 662.0
+theme_override_constants/separation = 125
 
 [node name="TitleLabel" type="Label" parent="VBoxContainer" unique_id=1114395128]
 modulate = Color(0.24313726, 0.6901961, 0, 1)

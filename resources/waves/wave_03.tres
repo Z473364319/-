@@ -4,10 +4,14 @@
 [ext_resource type="Script" uid="uid://cuifrs7lb6f1g" path="res://script/resources/enemy_data.gd" id="1_gdjso"]
 [ext_resource type="Resource" uid="uid://bqhynklpsuy83" path="res://resources/stats/Unit_emeny_ststs/enemy_melee_data.tres" id="2_lb7e6"]
 [ext_resource type="Resource" uid="uid://c6l53nmly1pyw" path="res://resources/stats/Unit_emeny_ststs/enemy_melee2_data.tres" id="3_hib0e"]
-[ext_resource type="Resource" uid="uid://cbcmeavycoq7i" path="res://resources/stats/Unit_emeny_ststs/enemy_ranged_data.tres" id="4_coec1"]
 
 [resource]
 script = ExtResource("1_7voic")
-enemies = Array[ExtResource("1_gdjso")]([ExtResource("2_lb7e6"), ExtResource("3_hib0e"), ExtResource("4_coec1")])
-weights = Array[int]([7, 2, 1])
+duration = 40.0
+spawn_interval = 1.4
+max_enemies = 21
+difficulty_multiplier = 1.4
+enemies = Array[ExtResource("1_gdjso")]([ExtResource("2_lb7e6"), ExtResource("3_hib0e")])
+weights = Array[int]([7, 2])
+spawn_interval_end = 0.9
 metadata/_custom_type_script = "uid://dufmvvtf78adf"

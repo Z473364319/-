@@ -2,9 +2,11 @@
 
 [ext_resource type="Script" uid="uid://cv1iagfb7ldg5" path="res://script/autoload/inventory.gd" id="1_2akhu"]
 [ext_resource type="Texture2D" uid="uid://ddffme61s8ojd" path="res://assets/sprites/Game picture/2.png" id="1_062rv"]
+[ext_resource type="Script" uid="uid://d2t2w6qnatigh" path="res://script/autoload/show_stats.gd" id="2_showst"]
 
 [node name="Inventory_Menu" type="CanvasLayer" unique_id=1073233013]
 process_mode = 3
+layer = 20
 script = ExtResource("1_2akhu")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=653561282]
@@ -30,22 +32,6 @@ text = "背包"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Panel" type="Panel" parent="." unique_id=974440489]
-offset_top = 162.0
-offset_right = 743.0
-offset_bottom = 649.0
-
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=1055220575]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.003
-anchor_bottom = 1.0
-offset_right = -0.2290039
-
-[node name="ItemGrid" type="GridContainer" parent="Panel/ScrollContainer" unique_id=981625110]
-layout_mode = 2
-columns = 5
-
 [node name="Return_Button" type="Button" parent="." unique_id=327521943]
 offset_left = 743.0
 offset_top = 573.0
@@ -57,3 +43,37 @@ theme_override_colors/font_disabled_color = Color(0.8745098, 0.8745098, 0.874509
 theme_override_colors/icon_disabled_color = Color(0.012617188, 0.012617188, 0.0031063685, 0.9372549)
 theme_override_font_sizes/font_size = 46
 text = "返回"
+
+[node name="Panel" type="Panel" parent="." unique_id=2142821132]
+offset_top = 123.0
+offset_right = 744.0
+offset_bottom = 647.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=895381845]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.448
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 342.0
+offset_top = -232.75201
+grow_horizontal = 2
+grow_vertical = 2
+follow_focus = false
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 1
+
+[node name="ItemGrid" type="HFlowContainer" parent="Panel/ScrollContainer" unique_id=111797321]
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+
+[node name="show" type="Label" parent="Panel" unique_id=1338396392]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 0.019000001
+offset_right = 265.0
+offset_bottom = 508.044
+theme_override_colors/font_color = Color(0.12, 0.06, 0.02, 1)
+theme_override_font_sizes/font_size = 22
+script = ExtResource("2_showst")

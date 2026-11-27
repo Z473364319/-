@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://c05f2myw76vfm"]
+
+[ext_resource type="Script" uid="uid://c8sgr05cf3klo" path="res://script/resources/stat_effect.gd" id="1_7en3q"]
+[ext_resource type="Texture2D" uid="uid://g14jpsiabr8m" path="res://assets/sprites/Game picture/036c5d2927d759958950e5d89824b80f.jpg" id="2_107q6"]
+[ext_resource type="Script" uid="uid://c2d25lggfnkaa" path="res://script/resources/upgrade_data.gd" id="2_vpiqe"]
+
+[resource]
+script = ExtResource("2_vpiqe")
+id = "0010"
+upgrade_name = "篮球"
+description = "一个篮球，价钱 10 坤元"
+icon = ExtResource("2_107q6")
+price = 25
+metadata/_custom_type_script = "uid://c2d25lggfnkaa"

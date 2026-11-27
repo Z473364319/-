@@ -8,16 +8,20 @@
 [ext_resource type="Script" uid="uid://cuifrs7lb6f1g" path="res://script/resources/enemy_data.gd" id="6_d875f"]
 [ext_resource type="Script" uid="uid://c2d25lggfnkaa" path="res://script/resources/upgrade_data.gd" id="6_jg60n"]
 [ext_resource type="Resource" uid="uid://bqhynklpsuy83" path="res://resources/stats/Unit_emeny_ststs/enemy_melee_data.tres" id="7_3daah"]
-[ext_resource type="Resource" uid="uid://tftbvtv1k5kj" path="res://resources/upgrade_thing/Cola.tres" id="7_8ll2e"]
-[ext_resource type="Resource" uid="uid://cbtsdtf11yokb" path="res://resources/upgrade_thing/qiaolezi.tres" id="8_jikii"]
-[ext_resource type="Resource" uid="uid://ial5yvx4u648" path="res://resources/upgrade_thing/ combo.tres" id="9_v368y"]
-[ext_resource type="Resource" uid="uid://drsibedic2vhu" path="res://resources/upgrade_thing/happy.tres" id="10_b0dje"]
+[ext_resource type="Resource" uid="uid://tftbvtv1k5kj" path="res://resources/upgrade_thing/0002.tres" id="7_8ll2e"]
+[ext_resource type="Resource" uid="uid://cbtsdtf11yokb" path="res://resources/upgrade_thing/0001.tres" id="8_jikii"]
+[ext_resource type="Resource" uid="uid://ial5yvx4u648" path="res://resources/upgrade_thing/0003.tres" id="9_v368y"]
+[ext_resource type="Resource" uid="uid://drsibedic2vhu" path="res://resources/upgrade_thing/0004.tres" id="10_b0dje"]
 [ext_resource type="Resource" uid="uid://de1ia6mwfo6kp" path="res://resources/upgrade_thing/0007.tres" id="11_i15eg"]
-[ext_resource type="Resource" uid="uid://iusin4vnm2bp" path="res://resources/upgrade_thing/C.tres" id="12_nkgtn"]
+[ext_resource type="Resource" uid="uid://iusin4vnm2bp" path="res://resources/upgrade_thing/0005.tres" id="12_nkgtn"]
+[ext_resource type="Resource" uid="uid://uaimv5xmdfob" path="res://resources/upgrade_thing/0008.tres" id="13_2x0t1"]
+[ext_resource type="Resource" uid="uid://b5yrou8bras72" path="res://resources/upgrade_thing/0009.tres" id="14_vy0ns"]
+[ext_resource type="Resource" uid="uid://c05f2myw76vfm" path="res://resources/upgrade_thing/0010.tres" id="15_er7h3"]
+[ext_resource type="Resource" uid="uid://bejx1n0bcpktl" path="res://resources/upgrade_thing/0011.tres" id="16_2x0t1"]
 
 [node name="GameDatabase" type="Node2D" unique_id=740913285]
 script = ExtResource("1_8gdy8")
 all_character_stats = Array[ExtResource("2_mr4do")]([ExtResource("3_jg60n")])
 all_weapons = Array[ExtResource("4_8ll2e")]([ExtResource("5_htskg")])
-all_upgrades = Array[ExtResource("6_jg60n")]([ExtResource("7_8ll2e"), ExtResource("8_jikii"), ExtResource("9_v368y"), ExtResource("10_b0dje"), ExtResource("11_i15eg"), ExtResource("12_nkgtn")])
+all_upgrades = Array[ExtResource("6_jg60n")]([ExtResource("7_8ll2e"), ExtResource("8_jikii"), ExtResource("9_v368y"), ExtResource("10_b0dje"), ExtResource("11_i15eg"), ExtResource("12_nkgtn"), ExtResource("13_2x0t1"), ExtResource("14_vy0ns"), ExtResource("15_er7h3"), ExtResource("16_2x0t1")])
 all_enemy_types = Array[ExtResource("6_d875f")]([ExtResource("7_3daah")])

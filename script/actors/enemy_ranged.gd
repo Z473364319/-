@@ -5,15 +5,20 @@ extends BaseEnemy
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 	
-	if _is_dead or not is_instance_valid(target):
+	if _is_dead:
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return
 		
-	# 1. 视野判断
-	if not is_player_in_sight():
+	# 0. 受击：Hurt 动画播放期间原地不动，也不射击
+	if is_hurting:
 		velocity = Vector2.ZERO
 		move_and_slide()
+		return
+		
+	# 1. 视野判断：玩家不存在或者不在视野内 → 随机游走（不会傻站着）
+	if not is_instance_valid(target) or not is_player_in_sight():
+		wander(delta)
 		return
 		
 	var distance = global_position.distance_to(target.global_position)
@@ -29,8 +34,9 @@ func _physics_process(delta: float) -> void:
 	# 距离刚好，停下来射击
 	else:
 		velocity = Vector2.ZERO
-		
-	move_and_slide()
+	
+	# move_with_separation 会自动叠加“分散力”：和同伴靠得太近时会被推开
+	move_with_separation()
 	
 	# 3. 左右翻转
 	if direction.x != 0 and sprite:

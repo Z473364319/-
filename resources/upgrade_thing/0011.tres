@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://bejx1n0bcpktl"]
+
+[ext_resource type="Script" uid="uid://c8sgr05cf3klo" path="res://script/resources/stat_effect.gd" id="1_13iya"]
+[ext_resource type="Texture2D" uid="uid://bgsn6avl277lh" path="res://assets/sprites/Game picture/2a98cf5ad93c6f3a5292398a09d1dfbb.jpg" id="2_u4cc8"]
+[ext_resource type="Script" uid="uid://c2d25lggfnkaa" path="res://script/resources/upgrade_data.gd" id="2_xawp0"]
+
+[sub_resource type="Resource" id="Resource_u4cc8"]
+script = ExtResource("1_13iya")
+stat_type = "damage_multiplier"
+value = 2.5
+metadata/_custom_type_script = "uid://c8sgr05cf3klo"
+
+[resource]
+script = ExtResource("2_xawp0")
+id = "0011"
+upgrade_name = "律师函"
+description = "增加伤害 2.5"
+icon = ExtResource("2_u4cc8")
+price = 25
+effects = Array[ExtResource("1_13iya")]([SubResource("Resource_u4cc8")])
+metadata/_custom_type_script = "uid://c2d25lggfnkaa"

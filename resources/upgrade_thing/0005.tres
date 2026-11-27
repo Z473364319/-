@@ -18,7 +18,7 @@ metadata/_custom_type_script = "uid://c8sgr05cf3klo"
 
 [resource]
 script = ExtResource("2_4625n")
-id = "005"
+id = "0005"
 upgrade_name = "冰箱里的怡泉c"
 description = "点击后才知道是冰的仙品还是常温的大便
 （增加或减少伤害）"

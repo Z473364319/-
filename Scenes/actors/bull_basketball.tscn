@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://d3vtglss5qu7"]
+
+[ext_resource type="Script" uid="uid://cbigxbnmpakiw" path="res://script/actors/bullet.gd" id="1_e5ga1"]
+[ext_resource type="Texture2D" uid="uid://ui8hjvc1p1tl" path="res://assets/sprites/Game picture/036c5d2927d759958950e5d89824b80f-removebg-preview.png" id="2_t6qqn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ryin7"]
+radius = 81.02469
+
+[node name="BullBasketball" type="Area2D" unique_id=876328103]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_e5ga1")
+lifespan = 2.5
+bounce_count = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1282934286]
+position = Vector2(-1.0000029, 4.0000095)
+scale = Vector2(0.47999996, 0.48800004)
+texture = ExtResource("2_t6qqn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1016922133]
+position = Vector2(8, -2)
+shape = SubResource("CircleShape2D_ryin7")

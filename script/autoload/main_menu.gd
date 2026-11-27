@@ -5,6 +5,10 @@ extends Control
 @onready var start_btn: Button = $VBoxContainer/StartButton
 
 func _ready() -> void:
+	# 从暂停菜单 / 结算界面回来时，兜底恢复时间流速和暂停状态
+	Engine.time_scale = 1.0
+	get_tree().paused = false
+	
 	# 1. 读取并显示最高记录
 	var records = SaveManager.get_high_scores()
 	high_wave_label.text = "历史最高波次：" + str(records["wave"])

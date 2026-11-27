@@ -13,5 +13,5 @@ attack_damage = 15
 attack_range = 430.0
 scene = ExtResource("2_4bqed")
 loot_scene = ExtResource("1_4bqed")
-loot_amount = 4
+loot_amount = 8
 metadata/_custom_type_script = "uid://cuifrs7lb6f1g"

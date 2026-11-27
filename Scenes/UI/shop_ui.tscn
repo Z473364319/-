@@ -53,7 +53,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(0, 320)
 custom_maximum_size = Vector2(-1, 320)
 layout_mode = 2
-theme_override_constants/separation = 130
+theme_override_constants/separation = 132
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer" unique_id=1633995109]
 custom_minimum_size = Vector2(40, 91)

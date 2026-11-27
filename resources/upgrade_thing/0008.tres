@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://uaimv5xmdfob"]
+
+[ext_resource type="Script" uid="uid://c8sgr05cf3klo" path="res://script/resources/stat_effect.gd" id="1_jn237"]
+[ext_resource type="Texture2D" uid="uid://cijbtpubr2l6f" path="res://assets/sprites/Game picture/e21d359b4e3db7d48e0ad31a691f564d.jpg" id="2_pdt3n"]
+[ext_resource type="Script" uid="uid://c2d25lggfnkaa" path="res://script/resources/upgrade_data.gd" id="2_xu1h3"]
+
+[sub_resource type="Resource" id="Resource_yrvre"]
+script = ExtResource("1_jn237")
+stat_type = "health_regen"
+value = 2.5
+metadata/_custom_type_script = "uid://c8sgr05cf3klo"
+
+[resource]
+script = ExtResource("2_xu1h3")
+id = "0008"
+upgrade_name = "假发"
+description = "增加 2.5 生命再生"
+icon = ExtResource("2_pdt3n")
+price = 25
+effects = Array[ExtResource("1_jn237")]([SubResource("Resource_yrvre")])
+metadata/_custom_type_script = "uid://c2d25lggfnkaa"

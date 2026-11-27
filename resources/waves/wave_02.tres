@@ -7,7 +7,13 @@
 
 [resource]
 script = ExtResource("1_uq12v")
+duration = 40.0
+spawn_interval = 1.5
 max_enemies = 30
+difficulty_multiplier = 1.1
 enemies = Array[ExtResource("1_s46f8")]([ExtResource("2_nhgry"), ExtResource("3_o58mm")])
 weights = Array[int]([7, 2])
+elite_enemies = Array[ExtResource("1_s46f8")]([ExtResource("3_o58mm")])
+elite_counts = Array[int]([1])
+spawn_interval_end = 0.9
 metadata/_custom_type_script = "uid://dufmvvtf78adf"
